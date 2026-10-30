@@ -1,0 +1,1753 @@
+/* =====================================================
+   PROPOOL — Services Page
+   File: services.css
+   -----------------------------------------------------
+    1. Global
+    2. Navigation
+    3. Hero
+    4. Hero marquee
+    5. Quick-jump bar
+    6. Shared section intro
+    7. Process (7 stages + water-flow animation)
+    8. Care (maintenance / repairs articles)
+    9. Services cards (desktop + mobile + CTA motion)
+   10. About / coverag
+   e
+   11. Footer
+   12. Floating buttons
+   13. Off-screen pause + reduced motion
+   ===================================================== */
+/* ==========1. GLOBAL======== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Cairo", sans-serif;
+  overflow-x: hidden;
+}
+img {
+  max-width: 100%;
+}
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+.container {
+  width: min(1200px, 92%);
+  margin-inline: auto;
+}
+/* ==========2. NAVIGATION============= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0 10px;
+  background-color: #086288;
+  transition: box-shadow 0.3s ease;
+}
+.nav.scrolled {
+  box-shadow: 0 4px 16px rgb(0 48 70 / 25%);
+}
+.nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  min-height: 65px;
+}
+.brand {
+  display: flex;
+  flex-shrink: 0;
+}
+.nav img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  object-fit: contain;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-links a {
+  padding: 6px 3px;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #bfeeff;
+}
+.nav-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 4px 24px;
+  border-radius: 30px;
+  background-color: #1788b8;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+.nav-cta:hover {
+  background-color: #0a739e;
+}
+.nav-cta svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.nav-cta strong {
+  font-size: 13px;
+  font-weight: 700;
+}
+.nav-cta .cta-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.cta-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+/* Hamburger (hidden on desktop) */
+.menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+.menu span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #fff;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+.menu.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.menu.open span:nth-child(2) {
+  opacity: 0;
+}
+.menu.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+/* ---------- Nav responsive ---------- */
+@media (max-width: 1024px) {
+  .nav .container {
+    gap: 12px;
+  }
+  .menu {
+    display: flex;
+    order: 3;
+  }
+  .nav-cta {
+    order: 2;
+    margin-inline-start: auto;
+  }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    z-index: 99;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 4%;
+    background-color: #086288;
+    border-top: 1px solid rgb(255 255 255 / 15%);
+    box-shadow: 0 12px 24px rgb(0 48 70 / 25%);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links a {
+    padding: 12px 6px;
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+    font-size: 14px;
+  }
+  .nav-links a:last-child {
+    border-bottom: 0;
+  }
+}
+@media (max-width: 600px) {
+  .nav {
+    padding: 0 4px;
+  }
+  .nav .container {
+    gap: 8px;
+    min-height: 58px;
+  }
+  .nav img {
+    width: 48px;
+    height: 48px;
+    padding: 5px;
+  }
+  .nav-cta {
+    gap: 6px;
+    padding: 6px 12px;
+  }
+  .nav-cta .cta-label {
+    display: none;
+  }
+  .nav-cta strong {
+    font-size: 12px;
+  }
+  .nav-cta svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+@media (max-width: 380px) {
+  .nav-cta {
+    padding: 6px 9px;
+  }
+  .nav-cta strong {
+    font-size: 11px;
+  }
+}
+/* ==================3. HERO=================== */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 30px;
+  padding: 40px max(4%, calc((100% - 1200px) / 2));
+  background-image: url("image/services-hero.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 25px;
+  border-radius: 20px;
+  background-color: rgb(23 136 184 / 92%);
+}
+.eyebrow {
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+}
+.hero-content h1 {
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.6;
+}
+.hero-content p {
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.9;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+.hero-actions a {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  border-radius: 40px;
+  background-color: #fff;
+  color: #086288;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+.hero-actions a:hover {
+  background-color: #086288;
+  color: #fff;
+}
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 30px 4%;
+  }
+}
+@media (max-width: 600px) {
+  .hero {
+    gap: 18px;
+    padding: 24px 4%;
+  }
+  .hero-content {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .hero-content p {
+    font-size: 13px;
+  }
+  .hero-actions,
+  .hero-actions a {
+    width: 100%;
+    font-size: 13px;
+  }
+}
+@media (max-width: 380px) {
+  .hero-content {
+    padding: 16px;
+  }
+}
+/* ===4. HERO MARQUEE (looping images)========= */
+.hero-marquee {
+  --marquee-duration: 57s;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  height: 340px;
+  padding: 10px 0;
+  direction: ltr; /* keeps the movement logic simple inside an RTL page */
+  border: 2px solid #086288;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: rgb(8 98 136 / 35%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: marquee-left var(--marquee-duration) linear infinite;
+  will-change: transform;
+}
+.marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+}
+.marquee-item {
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  margin-right: 12px; /* margin (not gap) so -50% is a seamless loop */
+  border-radius: 14px;
+  overflow: hidden;
+}
+.marquee-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (hover: hover) {
+  .hero-marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@media (max-width: 860px) {
+  .hero-marquee {
+    --marquee-duration: 44s;
+    height: 260px;
+  }
+}
+@media (max-width: 600px) {
+  .hero-marquee {
+    --marquee-duration: 34s;
+    height: 200px;
+    border-radius: 16px;
+  }
+  .marquee-item {
+    margin-right: 10px;
+    border-radius: 12px;
+  }
+}
+/* =====================================================
+   5. QUICK-JUMP BAR
+   ===================================================== */
+.svc-jump {
+  background-color: #086288;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+}
+.svc-jump .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.svc-jump a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+.svc-jump a:hover,
+.svc-jump a.active {
+  background-color: #1788b8;
+}
+@media (max-width: 860px) {
+  /* one scrollable row */
+  .svc-jump .container {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .svc-jump .container::-webkit-scrollbar {
+    display: none;
+  }
+  .svc-jump a {
+    flex: 0 0 auto;
+  }
+}
+@media (max-width: 600px) {
+  .svc-jump a {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+/* =====================================================
+   6. SHARED SECTION INTRO
+   ===================================================== */
+.svc-intro {
+  width: min(760px, 100%);
+  margin: 0 auto 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #160d6b;
+  font-family: "Cairo", sans-serif;
+  text-align: center;
+}
+.svc-intro img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+.svc-intro h2 {
+  font-size: clamp(23px, 3vw, 34px);
+  line-height: 1.6;
+}
+.svc-intro p {
+  color: #5e6d79;
+  font-size: 15px;
+  line-height: 2;
+}
+@media (max-width: 860px) {
+  .svc-intro {
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .svc-intro p {
+    font-size: 14px;
+  }
+}
+/* =====================================================
+   7. PROCESS: contractor + 7 stages
+   ===================================================== */
+.svc-process {
+  padding: 56px 0;
+  background-color: #f7f4f4;
+  font-family: "Cairo", sans-serif;
+  scroll-margin-top: 90px;
+}
+.svc-process-lead {
+  width: min(1060px, 100%);
+  margin: 0 auto 32px;
+  color: #0b2f45;
+  font-size: clamp(16px, 2vw, 21px);
+  font-weight: 700;
+  line-height: 1.95;
+}
+.svc-process-layout {
+  width: min(1060px, 100%);
+  margin-inline: auto;
+}
+/* ---------- Timeline ---------- */
+.svc-timeline {
+  list-style: none;
+}
+.svc-tl-item {
+  position: relative;
+  padding-inline-start: 50px;
+  padding-bottom: 26px;
+}
+.svc-tl-item:last-child {
+  padding-bottom: 0;
+}
+.svc-tl-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 15px;
+  top: 34px;
+  bottom: 4px;
+  width: 2px;
+  background: rgb(8 98 136 / 22%);
+}
+.svc-tl-num {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #086288;
+  border-radius: 50%;
+  background: #fff;
+  color: #086288;
+  font-size: 14px;
+  font-weight: 800;
+}
+.svc-tl-item.is-key .svc-tl-num {
+  background: #086288;
+  color: #fff;
+}
+.svc-tl-item h3 {
+  margin-bottom: 6px;
+  padding-top: 2px;
+  color: #0d4d6b;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.svc-tl-item p {
+  color: #3b5568;
+  font-size: 15.5px;
+  line-height: 1.95;
+}
+/* ---------- Pool water-flow animation ---------- */
+.pool-flow {
+  padding: 16px 0 8px;
+  background: linear-gradient(180deg, #eaf8ff, #f4f8fa);
+}
+.pool-flow-svg {
+  display: block;
+  width: min(920px, 100%);
+  height: auto;
+  margin-inline: auto;
+}
+.pool-flow .pf-label {
+  fill: #086288;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+/* water inside the pipes */
+.pool-flow .pf-flow { animation: pf-flow 0.9s linear infinite; }
+@keyframes pf-flow { to { stroke-dashoffset: -20; } }
+/* pump impeller */
+.pool-flow .pf-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pf-spin 1.2s linear infinite;
+}
+@keyframes pf-spin { to { transform: rotate(360deg); } }
+/* pool waves */
+.pool-flow .pf-wave-a { animation: pf-wave 5s linear infinite; }
+.pool-flow .pf-wave-b { animation: pf-wave 7s linear infinite reverse; }
+@keyframes pf-wave { to { transform: translateX(-100px); } }
+/* dirt falling in the filter */
+.pool-flow .pf-dirt {
+  opacity: 0.9;
+  animation: pf-fall 2.6s linear infinite;
+}
+@keyframes pf-fall {
+  0%   { transform: translateY(0);    opacity: 0; }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.9; }
+  100% { transform: translateY(44px); opacity: 0; }
+}
+/* clean water leaving the filter */
+.pool-flow .pf-clean { animation: pf-drift 2.2s linear infinite; }
+@keyframes pf-drift {
+  0%   { transform: translateX(0);     opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(-76px); opacity: 0; }
+}
+/* bubbles entering the pool */
+.pool-flow .pf-bubble { animation: pf-rise 2.4s ease-in infinite; }
+@keyframes pf-rise {
+  0%   { transform: translateY(0);     opacity: 0; }
+  15%  { opacity: 0.9; }
+  100% { transform: translateY(-36px); opacity: 0; }
+}
+/* wrench tightening the valve */
+.pool-flow .pf-wrench {
+  transform-box: view-box;
+  transform-origin: 556px 152px;
+  animation: pf-wrench 1.2s ease-in-out infinite;
+}
+@keyframes pf-wrench {
+  0%, 100% { transform: rotate(-14deg); }
+  50%      { transform: rotate(14deg); }
+}
+/* spark at the end of each turn */
+.pool-flow .pf-spark {
+  opacity: 0;
+  animation: pf-spark 1.2s linear infinite;
+}
+@keyframes pf-spark {
+  0%, 44%   { opacity: 0; }
+  50%       { opacity: 1; }
+  66%, 100% { opacity: 0; }
+}
+/* status chip: 3 messages in turn (9s cycle) */
+.pool-flow .pf-st2,
+.pool-flow .pf-st3 { opacity: 0; }
+.pool-flow .pf-st1 { animation: pf-st1 9s linear infinite; }
+.pool-flow .pf-st2 { animation: pf-st2 9s linear infinite; }
+.pool-flow .pf-st3 { animation: pf-st3 9s linear infinite; }
+@keyframes pf-st1 { 0%, 28% { opacity: 1; } 33%, 100% { opacity: 0; } }
+@keyframes pf-st2 { 0%, 33% { opacity: 0; } 38%, 61% { opacity: 1; } 66%, 100% { opacity: 0; } }
+@keyframes pf-st3 { 0%, 66% { opacity: 0; } 71%, 95% { opacity: 1; } 100% { opacity: 0; } }
+/* ---------- Process responsive ---------- */
+@media (max-width: 860px) {
+  .svc-process {
+    padding: 44px 0;
+  }
+}
+@media (max-width: 600px) {
+  .svc-tl-item {
+    padding-inline-start: 44px;
+  }
+  .svc-tl-num {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+  .svc-tl-item:not(:last-child)::before {
+    inset-inline-start: 13px;
+    top: 30px;
+  }
+  .svc-tl-item h3 {
+    font-size: 16px;
+  }
+  .svc-tl-item p {
+    font-size: 15px;
+  }
+  /* labels and status chip get too small on mobile */
+  .pool-flow {
+    padding: 10px 0 4px;
+  }
+  .pool-flow .pf-label,
+  .pool-flow .pf-chip {
+    display: none;
+  }
+}
+/* =====================================================
+   8. CARE: periodic maintenance + repairs (articles)
+   ===================================================== */
+.svc-care {
+  padding: 56px 0;
+  background-color: #fff;
+  font-family: "Cairo", sans-serif;
+}
+.svc-care-head {
+  width: min(820px, 100%);
+  margin: 0 auto 44px;
+  text-align: center;
+}
+.svc-care-head h2 {
+  color: #160d6b;
+  font-size: clamp(18px, 2.3vw, 24px);
+  font-weight: 800;
+  line-height: 1.7;
+  text-wrap: balance;
+}
+.svc-care-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: center;
+  gap: 48px;
+  width: min(1060px, 100%);
+  margin: 0 auto 56px;
+  scroll-margin-top: 90px;
+}
+.svc-care-block:last-child {
+  margin-bottom: 0;
+}
+.svc-care-block.is-reverse {
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+}
+.svc-care-block.is-reverse .svc-care-figure {
+  order: -1;
+}
+.svc-care-figure {
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgb(0 48 70 / 16%);
+}
+.svc-care-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: #03435f;
+}
+.svc-care-text h2 {
+  margin-bottom: 12px;
+  color: #160d6b;
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 800;
+  line-height: 1.6;
+}
+.svc-care-text h4 {
+  margin: 20px 0 6px;
+  color: #086288;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.svc-care-text p {
+  margin-bottom: 12px;
+  color: #3b5568;
+  font-size: 15.5px;
+  line-height: 1.95;
+}
+.svc-care-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  margin: 14px 0 22px;
+  list-style: none;
+}
+.svc-care-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #160d6b;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.8;
+}
+.svc-care-list li::before {
+  content: "✓";
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #086288;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+.svc-care-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.svc-care-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 26px;
+  border: 2px solid #086288;
+  border-radius: 99px;
+  background-color: #086288;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+.svc-care-btn:hover,
+.svc-care-btn:focus-visible {
+  border-color: #054a68;
+  background-color: #054a68;
+}
+.svc-care-btn.is-outline {
+  background-color: transparent;
+  color: #086288;
+}
+.svc-care-btn.is-outline:hover,
+.svc-care-btn.is-outline:focus-visible {
+  background-color: #086288;
+  color: #fff;
+}
+/* light bounce on the WhatsApp buttons */
+.svc-care-btn[href*="whatsapp"] {
+  gap: 8px;
+  animation: cta-bounce-sm 4s ease-in-out infinite;
+}
+.svc-care-btn[href*="whatsapp"]:hover,
+.svc-care-btn[href*="whatsapp"]:focus-visible,
+.svc-care-btn[href*="whatsapp"]:active {
+  animation-play-state: paused;
+}
+@keyframes cta-bounce-sm {
+  0%, 55%, 100% { transform: translateY(0); }
+  65%           { transform: translateY(-6px); }
+  75%           { transform: translateY(0); }
+  85%           { transform: translateY(-3px); }
+}
+@media (max-width: 860px) {
+  .svc-care {
+    padding: 4px 0;
+  }
+  .svc-care-block,
+  .svc-care-block.is-reverse {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-bottom: 44px;
+  }
+  .svc-care-block .svc-care-figure {
+    order: -1;
+  }
+  .svc-care-figure img {
+    aspect-ratio: 16 / 10;
+  }
+}
+@media (max-width: 600px) {
+  .svc-care-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+  .svc-care-text p,
+  .svc-care-list li {
+    font-size: 14.5px;
+  }
+  .svc-care-actions .svc-care-btn {
+    width: 100%;
+  }
+}
+/* =====================================================
+   9. SERVICES CARDS
+   ===================================================== */
+.services-section {
+  padding: 0;
+  background-color: #f4f8fa;
+}
+.services-section > .container {
+  display: grid;
+}
+.svc-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 26px;
+}
+.svc-item {
+  min-width: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 22px;
+  border: 1px solid rgb(8 98 136 / 12%);
+  border-radius: 18px;
+  background-color: #086288;
+  box-shadow: 0 8px 24px rgb(0 48 70 / 8%);
+  color: #fff;
+  overflow: hidden;
+  scroll-margin-top: 90px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.svc-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 32px rgb(0 48 70 / 16%);
+}
+/* ---------- Card content ---------- */
+.svc-content {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.svc-item h3 {
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.svc-item p {
+  margin: 0 0 20px;
+  color: rgb(255 255 255 / 90%);
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  line-height: 2;
+}
+.svc-features {
+  width: 100%;
+  margin: 0 0 24px;
+  display: grid;
+  gap: 13px;
+  list-style: none;
+}
+.svc-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.svc-features li::before {
+  content: "✓";
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #086288;
+  font-size: 13px;
+  font-weight: 800;
+}
+.svc-inline-link {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 55%);
+  text-underline-offset: 4px;
+}
+.svc-inline-link:hover {
+  text-decoration-color: #fff;
+}
+/* ---------- Card buttons ---------- */
+.svc-actions {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.svc-item .btn {
+  min-height: 46px;
+  padding: 11px 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+/* single button directly inside content → pinned to card bottom */
+.svc-content > .btn {
+  margin-top: auto;
+}
+.svc-item .btn-primary {
+  background-color: #fff;
+  color: #086288;
+}
+.svc-item .btn-primary:hover {
+  border-color: #e8f5fb;
+  background-color: #e8f5fb;
+}
+.svc-item .btn-dark {
+  border-color: rgb(255 255 255 / 20%);
+  background-color: #03435f;
+  color: #fff;
+}
+.svc-item .btn-dark:hover {
+  background-color: #02344a;
+}
+/* ---------- Card media ---------- */
+.svc-image {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 13px;
+}
+.svc-image img,
+.svc-image video {
+  display: block;
+  width: 100%;
+  height: auto; /* overrides the height="" attribute so aspect-ratio controls the size */
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background-color: #03435f;
+  transition: transform 0.4s ease;
+}
+.svc-item:hover .svc-image img,
+.svc-item:hover .svc-image video {
+  transform: scale(1.03);
+}
+/* keep the top of the waterfall visible in the wide crop */
+#water-features .svc-image video {
+  object-position: center 30%;
+}
+/* ---------- Cards responsive ---------- */
+@media (max-width: 1024px) {
+  .svc-list {
+    gap: 20px;
+  }
+  .svc-item {
+    padding: 22px;
+  }
+}
+@media (max-width: 860px) {
+  .svc-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .svc-item h3 {
+    font-size: 20px;
+  }
+}
+/* ---------- Mobile cards ----------
+   top:    title + features (start) | image with the same height (end)
+   bottom: buttons row across the whole card
+   ----------------------------------------------------- */
+@media (max-width: 600px) {
+  .svc-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .svc-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(104px, 36%, 150px);
+    grid-template-rows: auto auto auto;
+    gap: 0 12px;
+    align-items: start;
+    padding: 14px;
+    border: 1px solid rgb(255 255 255 / 45%);
+    border-radius: 18px;
+    background: linear-gradient(135deg, #0b6a96 0%, #064a6e 100%);
+    box-shadow: 0 8px 22px rgb(0 48 70 / 22%);
+  }
+  .svc-item:hover {
+    transform: none;
+  }
+  /* unwrap so children sit directly on the card grid */
+  .svc-item .svc-content {
+    display: contents;
+  }
+  .svc-item h3 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 0 12px;
+    padding: 6px 14px;
+    border: 1px solid rgb(255 255 255 / 35%);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 8%);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .svc-item p {
+    display: none;
+  }
+  .svc-item .svc-features {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    gap: 10px;
+  }
+  .svc-item .svc-features li {
+    gap: 8px;
+    font-size: 10.5px;
+    line-height: 1.7;
+  }
+  .svc-item .svc-features li::before {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    font-size: 12px;
+  }
+  /* image matches the height of (title + features) */
+  .svc-item .svc-image {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    min-height: 120px;
+    border-radius: 12px;
+  }
+  .svc-item .svc-image img,
+  .svc-item .svc-image video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  /* buttons row: full card width, side by side */
+  .svc-item .svc-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    width: 100%;
+    margin-top: 14px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .svc-item .svc-actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+  }
+  /* cards with a single button */
+  .svc-item .svc-content > .btn {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .svc-item .btn {
+    min-height: 40px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+}
+@media (max-width: 380px) {
+  .svc-item h3 {
+    font-size: 15px;
+  }
+}
+/* ---------- CTA motion: animated border on WhatsApp buttons ---------- */
+@property --cta-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.svc-item .btn[href*="whatsapp"] {
+  --btn-bg: #fff;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--btn-bg), var(--btn-bg)) padding-box,
+    conic-gradient(
+      from var(--cta-angle),
+      rgb(255 255 255 / 25%) 0%,
+      rgb(255 255 255 / 25%) 55%,
+      #00e5ff 80%,
+      #fff 100%
+    ) border-box;
+  animation: cta-spin 2.8s linear infinite;
+}
+.svc-item .btn-dark[href*="whatsapp"] {
+  --btn-bg: #03435f;
+}
+.svc-item .btn[href*="whatsapp"]:hover {
+  --btn-bg: #e8f5fb;
+  animation-play-state: paused;
+}
+.svc-item .btn-dark[href*="whatsapp"]:hover {
+  --btn-bg: #02344a;
+}
+@keyframes cta-spin {
+  to { --cta-angle: 360deg; }
+}
+/* ---------- WhatsApp icon inside WhatsApp buttons (takes the text colour) ---------- */
+.svc-item .btn[href*="whatsapp"]::before,
+.svc-care-btn[href*="whatsapp"]::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 1.25em;
+  height: 1.25em;
+  background-color: currentColor;
+  -webkit-mask: var(--wa-icon) center / contain no-repeat;
+  mask: var(--wa-icon) center / contain no-repeat;
+  --wa-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88zM20.52 3.45A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.31-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.43-8.46z'/%3E%3C/svg%3E");
+}
+/* =====================================================
+   10. ABOUT / COVERAGE (before footer)
+   ===================================================== */
+.svc-about {
+  padding: 56px 0;
+  background-color: #fff;
+  font-family: "Cairo", sans-serif;
+}
+.svc-about-inner {
+  width: min(900px, 100%);
+  margin-inline: auto;
+}
+.svc-about h2 {
+  margin-bottom: 18px;
+  color: #160d6b;
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 800;
+  line-height: 1.6;
+  text-align: center;
+  text-wrap: balance;
+}
+.svc-about p {
+  margin: 0 0 14px;
+  color: #3b5568;
+  font-size: 15.5px;
+  line-height: 2;
+}
+.svc-about p:last-child {
+  margin-bottom: 0;
+  padding: 12px 16px;
+  border-inline-start: 4px solid #00b8d9;
+  border-radius: 6px;
+  background: rgb(0 184 217 / 8%);
+  color: #086288;
+  font-weight: 600;
+}
+@media (max-width: 860px) {
+  .svc-about {
+    padding: 44px 0;
+  }
+}
+@media (max-width: 600px) {
+  .svc-about p {
+    font-size: 14.5px;
+  }
+}
+/* =====================================================
+   11. FOOTER
+   ===================================================== */
+.site-footer {
+  --c-ocean: #0b4f8a;
+  --c-ocean-deep: #073a67;
+  --c-aqua: #00b8d9;
+  --c-gold-soft: #e4cd97;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  padding: 60px 0 0;
+  background: var(--c-ocean-deep);
+  color: rgb(255 255 255 / 82%);
+  font-family: "Cairo", sans-serif;
+}
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-footer ul {
+  list-style: none;
+}
+.site-footer p {
+  display: flex;
+  justify-content: center;
+  color: rgb(255 255 255 / 65%);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.site-footer h4 {
+  position: relative;
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.site-footer h4::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 36px;
+  height: 3px;
+  border-radius: 3px;
+  background-color: #bfeeff;
+  transform: translateX(-50%);
+}
+/* soft water effect */
+.site-footer .caustics {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,\<svg xmlns='http\://www\.w3.org/2000/svg'>\<filter id='c'>\<feTurbulence type='fractalNoise' baseFrequency='0.012 0.028' numOctaves='2' seed='7' result='n'>\<animate attributeName='baseFrequency' dur='22s' values='0.012 0.028;0.02 0.04;0.012 0.028' repeatCount='indefinite'/>\</feTurbulence>\<feColorMatrix in='n' type='matrix' values='0 0 0 0 0.0  0 0 0 0 0.72  0 0 0 0 0.85  0 0 0 0.5 0'/>\</filter>\<rect width='100%25' height='100%25' filter='url(%23c)'/>\</svg>");
+  opacity: 0.16;
+  mix-blend-mode: screen;
+}
+/* grid: social + brand on top (full width), then quick links | services side by side */
+.site-footer .footer-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 260px));
+  justify-content: center;
+  justify-items: center;
+  column-gap: 16px;
+  row-gap: 36px;
+  padding: 50px 0 60px;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  text-align: center;
+}
+.site-footer .footer-grid > div,
+.site-footer .footer-quick {
+  min-width: 0;
+}
+.site-footer .footer-grid > :first-child {
+  grid-column: 1 / -1;
+}
+.site-footer .footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+/* social icons */
+.site-footer .social-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.site-footer .social-row a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 8%);
+  color: #fff;
+  transition:
+    background 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s,
+    border-color 0.3s;
+}
+.site-footer .social-row svg {
+  width: 20px;
+  height: 20px;
+}
+.site-footer .social-row a:hover {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--c-aqua), var(--c-ocean));
+  box-shadow: 0 12px 26px -8px rgb(0 184 217 / 60%);
+  transform: translateY(-4px);
+}
+/* Instagram CTA */
+.site-footer .footer-cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 99px;
+  background: linear-gradient(45deg, #f09433, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888);
+  box-shadow: 0 14px 32px -10px rgb(220 39 67 / 60%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s;
+}
+.site-footer .footer-cta svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+.site-footer .footer-cta:hover {
+  box-shadow: 0 20px 44px -10px rgb(220 39 67 / 80%);
+  transform: translateY(-4px);
+}
+/* brand + description */
+.site-footer .footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0 14px;
+  color: #fff;
+  font-family: "Cairo", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.site-footer .footer-brand svg {
+  flex-shrink: 0;
+}
+.site-footer .footer-top p {
+  max-width: 420px;
+  margin: 0 auto;
+}
+/* link lists */
+.site-footer .flinks {
+  display: grid;
+}
+.site-footer .flinks li {
+  margin-bottom: 12px;
+}
+.site-footer .flinks a {
+  display: inline-block;
+  color: rgb(255 255 255 / 70%);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  transition:
+    color 0.3s,
+    padding 0.3s,
+    transform 0.3s;
+}
+.site-footer .flinks a:hover {
+  padding-inline-start: 6px;
+  color: var(--c-aqua);
+  transform: translateX(-4px);
+}
+/* bottom bar + developer credit */
+.site-footer .footer-bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 26px 0;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  color: rgb(255 255 255 / 55%);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.site-footer .footer-bottom p {
+  color: rgb(255 255 255 / 75%);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.site-footer .dev-credit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 10px;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding-top: 14px;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  color: rgb(255 255 255 / 60%);
+  font-size: 0.8rem;
+}
+.site-footer .dev-name {
+  color: var(--c-aqua);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  transition:
+    color 0.3s,
+    text-shadow 0.3s;
+}
+.site-footer .dev-name:hover {
+  color: var(--c-gold-soft);
+  text-shadow: 0 0 14px rgb(0 184 217 / 50%);
+}
+.site-footer .dev-sep {
+  opacity: 0.4;
+}
+.site-footer .dev-phone {
+  padding: 3px 12px;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+  font-weight: 600;
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+.site-footer .dev-phone:hover {
+  background: rgb(255 255 255 / 20%);
+  color: var(--c-gold-soft);
+}
+/* ---------- Footer responsive ---------- */
+@media (max-width: 860px) {
+  .site-footer {
+    padding-top: 50px;
+  }
+}
+@media (max-width: 760px) {
+  .site-footer .footer-cta {
+    width: 100%;
+    max-width: 320px;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 600px) {
+  .site-footer {
+    padding-top: 40px;
+  }
+  /* keeps the last footer lines clear of the floating buttons */
+  .site-footer .footer-bottom {
+    padding-bottom: 76px;
+  }
+}
+@media (max-width: 380px) {
+  .site-footer .footer-grid {
+    column-gap: 10px;
+  }
+  .site-footer .flinks a {
+    font-size: 0.82rem;
+  }
+}
+/* =====================================================
+   12. FLOATING BUTTONS
+   - home:       bottom corner (start side)
+   - WhatsApp:   above the home button
+   - emergency:  bottom corner (end side)
+   - back-top:   above the emergency button, shown after scroll
+   ===================================================== */
+.home-float,
+.emergency-float,
+.wa-float,
+.back-top {
+  position: fixed;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+/* pills: home + emergency */
+.home-float,
+.emergency-float {
+  bottom: 18px;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+.home-float {
+  inset-inline-start: 16px;
+  background-color: #086288;
+  box-shadow: 0 8px 22px rgb(0 48 70 / 35%);
+}
+.home-float:hover {
+  background-color: #1788b8;
+  transform: translateY(-2px);
+}
+.home-float svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.emergency-float {
+  inset-inline-end: 16px;
+  background-color: #d62828;
+  box-shadow: 0 8px 22px rgb(120 0 0 / 40%);
+  animation: cta-bounce 4s ease-in-out infinite;
+}
+.emergency-float:hover,
+.emergency-float:active {
+  background-color: #b01e1e;
+  transform: translateY(-2px);
+  animation-play-state: paused;
+}
+@keyframes cta-bounce {
+  0%, 55%, 100% { transform: translateY(0); }
+  65%           { transform: translateY(-9px); }
+  75%           { transform: translateY(0); }
+  85%           { transform: translateY(-4px); }
+}
+/* round buttons: WhatsApp + back-to-top */
+.wa-float,
+.back-top {
+  bottom: 74px;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.wa-float svg,
+.back-top svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.wa-float {
+  inset-inline-start: 16px;
+  background-color: #25d366;
+  box-shadow: 0 8px 22px rgb(0 80 30 / 35%);
+}
+.wa-float:hover {
+  background-color: #1ebe5a;
+  transform: translateY(-2px);
+}
+.back-top {
+  inset-inline-end: 16px;
+  background-color: #086288;
+  box-shadow: 0 8px 22px rgb(0 48 70 / 35%);
+  /* hidden until JS adds .is-visible */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    background-color 0.3s ease;
+}
+.back-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.back-top:hover {
+  background-color: #1788b8;
+}
+@media (max-width: 600px) {
+  .home-float,
+  .emergency-float {
+    bottom: 14px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .home-float {
+    inset-inline-start: 12px;
+  }
+  .emergency-float {
+    inset-inline-end: 12px;
+  }
+  .wa-float,
+  .back-top {
+    bottom: 66px;
+    width: 44px;
+    height: 44px;
+  }
+  .wa-float {
+    inset-inline-start: 12px;
+  }
+  .back-top {
+    inset-inline-end: 12px;
+  }
+}
+@media (max-width: 380px) {
+  .home-float,
+  .emergency-float {
+    gap: 5px;
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+  .wa-float,
+  .back-top {
+    width: 40px;
+    height: 40px;
+  }
+}
+/* =====================================================
+   13. OFF-SCREEN PAUSE + REDUCED MOTION
+   ===================================================== */
+.pool-flow.is-offscreen *,
+.svc-item.is-offscreen .btn,
+.svc-care-block.is-offscreen .svc-care-btn {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .hero-marquee {
+    overflow-x: auto;
+  }
+  .svc-item .btn[href*="whatsapp"],
+  .svc-care-btn[href*="whatsapp"],
+  .emergency-float,
+  .pool-flow * {
+    animation: none !important;
+  }
+}
+.promo{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55);opacity:0;transition:opacity .3s}
+.promo[hidden]{display:none}
+.promo.show{opacity:1}
+.promo-box{position:relative;max-width:380px;width:100%;padding:32px 24px 26px;text-align:center;border-radius:20px;background:var(--surface,#fff);color:var(--text,#0a141d);box-shadow:0 30px 80px -20px rgba(0,0,0,.6);transform:translateY(16px);transition:transform .3s}
+.promo.show .promo-box{transform:none}
+.promo-close{position:absolute;top:8px;inset-inline-start:10px;width:44px;height:44px;border:0;background:none;font-size:28px;line-height:1;color:inherit;cursor:pointer}
+.promo-tag{display:inline-block;padding:4px 14px;margin-bottom:10px;border-radius:999px;background:#c9a24a;color:#fff;font-size:13px;font-weight:700}
+.promo-box h3{margin:6px 0 8px;font-size:22px}
+.promo-box p{margin:0 0 20px;opacity:.8}
+.promo-cta{display:inline-block;padding:13px 30px;border-radius:999px;background:linear-gradient(135deg,#0b4a8a,#00a8d6);color:#fff;font-weight:700;text-decoration:none}
+.promo-bubble{position:fixed;left:16px;bottom:110px;z-index:9000;width:74px;height:74px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.75);color:#fff;font:800 14px/1.2 inherit;font-family:inherit;cursor:pointer;
+  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.55),rgba(255,255,255,0) 38%),linear-gradient(135deg,#0b4a8a,#00a8d6);
+  box-shadow:0 10px 25px -8px rgba(0,110,170,.75);opacity:0;scale:.6;transition:opacity .4s,scale .4s;animation:pbFloat 4s ease-in-out infinite}
+.promo-bubble[hidden]{display:none}
+.promo-bubble.show{opacity:1;scale:1}
+.promo-bubble::before,.promo-bubble::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(0,168,214,.55);animation:pbRipple 2.8s ease-out infinite;pointer-events:none}
+.promo-bubble::after{animation-delay:1.4s}
+@keyframes pbFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@keyframes pbRipple{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.promo-bubble,.promo-bubble::before,.promo-bubble::after{animation:none}}
